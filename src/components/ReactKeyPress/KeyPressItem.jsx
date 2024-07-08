@@ -33,7 +33,7 @@ const KeyPressItem = forwardRef(function KeyPressItem(
   }, [
     keyCombo,
     name,
-    // following won't change in lifecycle of item, adding for best practice
+    // following won't change in lifecycle of item, adding for best practices
     itemId,
     onKeyEventRef,
     registerChildren,
