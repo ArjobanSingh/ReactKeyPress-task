@@ -20,15 +20,19 @@ export default function ReactKeyPress({ children }) {
 
   useEffect(() => {
     const listener = keypressListener.current;
-    // simplest solution as of now
+    // As different children can have different key sets
+    // so mapping over all and attaching listener independently
     const combos = childrenItems.map((item) => {
       const { keyCombo, onKeyEventRef } = item;
-      const onKeyEvent = onKeyEventRef.current;
-      return listener.simple_combo(keyCombo, onKeyEvent);
+      return listener.simple_combo(keyCombo, () => {
+        const onKeyEvent = onKeyEventRef.current;
+        onKeyEvent();
+      });
     });
 
     return () => {
       if (!listener) return;
+      // unregister all on cleanup
       listener.unregister_many(combos);
     };
   }, [childrenItems]);
